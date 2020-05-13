@@ -1,18 +1,16 @@
 import React from 'react';
-import io from "socket.io-client"; 
+import {socket} from './socket';
+import JoinBlock from "./components/JoinBlock";
 
 
 
 
 const App=()=> {
-  
-  const connectSocket =()=>{
-    const socket = io('http://localhost:4000');
-  }
+
   
   return (
-  <div>
-  <button onClick={connectSocket}>CONNECT</button>
+  <div className="wrapper">
+   <JoinBlock />
   </div>
   );
 }

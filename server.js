@@ -16,7 +16,7 @@ const io =require('socket.io')(server);
 const rooms = new Map(); // типо объект но улучшенный, псевдомассив , объект которые наследует методы массива
 
 
-app.get('/rooms',(req,res)=>{
+app.get('/rooms',(req,res)=>{ 
    
     res.json(rooms);
 
