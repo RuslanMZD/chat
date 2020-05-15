@@ -22,8 +22,12 @@ app.get('/rooms',(req,res)=>{
 
 });
 
+app.post('/rooms',(req,res)=>{
+ res.send();
+});
+
 io.on("connection", socket=>{
-    console.log("user connected", socket.id);
+    console.log("user connected", socket.id); // как только юзер подкл к сокетам мы получим сообщение в консоль
 
 });
 
