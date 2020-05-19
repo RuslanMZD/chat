@@ -7,23 +7,31 @@ import axios from 'axios';
 
 
 
-const JoinBlock=()=>{
-
+const JoinBlock=(props)=>{
+ 
   const [roomId, setRoomId] = React.useState('');
 
   const [userName, setUserName]= React.useState('');
 
+  const[isLoading, setIsLoading]=React.useState(false);
 
-  const onEnter=()=>{
+
+  const onEnter=async ()=>{
     if(!roomId || !userName){
      return alert("Неверные данные")
 
     }
 
-  axios.post('/rooms',{
-    roomId,
-    userName
-  });
+    const obj={
+      roomId,
+      userName
+    }
+
+    setIsLoading(true);
+  
+ await axios.post('/rooms', obj );
+
+  props.onLogin(obj);
 
 
   };
@@ -32,7 +40,7 @@ return(
     <div className="join-block"> 
     <input type="text" placeholder="ROOM ID" value={roomId} onChange={(e)=>setRoomId(e.target.value) }></input>
     <input type="text" placeholder="YOU NAME" value={userName} onChange={(e)=>setUserName(e.target.value) }></input>
-    <button className= "btn btn-success" onClick={onEnter}>INTER</button>
+<button disabled={isLoading} className= "btn btn-success" onClick={onEnter}>{isLoading ? "ВХОД" : "Войти"}</button>
   </div>
 
 )}

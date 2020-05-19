@@ -12,6 +12,7 @@ const io =require('socket.io')(server);
 
 // };
 
+app.use(express.json());  // парсить тело запросов, иначе req ничего не выдаст
 
 const rooms = new Map(); // типо объект но улучшенный, псевдомассив , объект которые наследует методы массива
 
@@ -23,10 +24,27 @@ app.get('/rooms',(req,res)=>{
 });
 
 app.post('/rooms',(req,res)=>{
- res.send();
+const {roomId, userName}=req.body;
+if(!rooms.has(roomId)){
+   rooms.set(
+       roomId, new Map([
+       ['users', new Map()],
+       ['messages',[]],
+   ])
+ 
+   )};
+   res.send();
+   console.log(roomId)
+  // console.log([...rooms])
+//res.json([...rooms.keys()]); 
+
 });
 
-io.on("connection", socket=>{
+io.on("connection", (socket)=>{
+   socket.on("ROOM:JOIN",(data)=>{   //КОгда каждый клиент будет отправлять сокет запрос с экшеном ROOM:JOIN то будет выполнять функция, этот метод будет срабатывать для всех пользователей. data данные которые передает польз серверу
+       console.log(data)
+   })
+   
     console.log("user connected", socket.id); // как только юзер подкл к сокетам мы получим сообщение в консоль
 
 });
